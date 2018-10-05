@@ -6,6 +6,9 @@
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-scripts": "2.0.5",
+    "apollo-boost": "^0.1.16",
+    "graphql": "^14.0.2",
+    "react-apollo": "^2.2.4",
     "semantic-ui-css": "^2.4.0",
     "semantic-ui-react": "^0.82.5"
   },
