@@ -1,12 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import { AUTH_TOKEN } from './constants'
 import { isTokenExpired } from './utils/jwtHelper'
 
-import { Query } from 'react-apollo'
-import { me } from './graphql/user'
-
-import LoginPage from './components/shared/LoginPage'
+import Layout from './components/Layout';
 
 class Root extends Component {
 	state = {
@@ -44,22 +41,10 @@ class Root extends Component {
 	render() {
 		const { token } = this.state
 		return (
-			<Fragment>
-				{ !token 
-				  ?	<LoginPage refreshToken={this.refreshToken} />
-				  : <Query query={me} >
-							{({ loading, error, data }) => {
-								if (loading) return null
-								if (error) return `Error!: ${error.message}`
-								return (
-									<div>
-                    Logged In!
-                  </div>
-								)
-							}}
-					</Query> 
-				}
-			</Fragment>
+			<Layout 
+				token={token}
+				refreshToken={this.refreshToken}
+			/>
 		)
 	}
 }

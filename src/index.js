@@ -1,13 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'semantic-ui-css/semantic.min.css'
-import App from './App'
 import * as serviceWorker from './serviceWorker'
 
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
+import defaults from './apollo/defaults'
+import resolvers from './apollo/resolvers'
+
 
 import { AUTH_TOKEN } from './constants'
+
+import App from './App'
 
 // @ts-ignore
 const client = new ApolloClient({
@@ -21,6 +25,10 @@ const client = new ApolloClient({
 				Authorization: token ? `Bearer ${token}` : '',
 			}
 		})
+	},
+	clientState: {
+		defaults,
+		resolvers
 	}
 })
 

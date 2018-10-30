@@ -1,20 +1,10 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import styled from 'styled-components'
-import { Header, Form, Message, Button, Segment } from 'semantic-ui-react'
+import { Form, Message, Button, Segment } from 'semantic-ui-react'
 
 import { graphql, compose } from 'react-apollo'
 import { login } from '../../graphql/user'
-
-const MenuDiv = styled.div`
-	border-bottom: 1px solid #7e7e81;
-	// height: 35px;
-`
-
-const MenuHeader = styled(Header)`
-	display: inline;
-	padding: 0 1rem !important;
-`
 
 const SSegment = styled(Segment)`
 	max-width: 350px !important;
@@ -51,46 +41,39 @@ class LoginPage extends Component {
 	render() {
 		const { email, password, sendingRequest, error } = this.state
 		return (
-			<Fragment>
-				<MenuDiv>
-					<MenuHeader size='large'>
-						<i>Колмех</i>
-					</MenuHeader>
-				</MenuDiv>
-				<SSegment basic>
-					<Form error={!!error}>
-						<Form.Field>
-							<label>E-mail</label>
-							<input 
-								type="email" 
-								placeholder='E-mail'
-								ref={ref => this.email = ref} 
-								onChange={() => this.handleInputChange('email')} />
-						</Form.Field>
-						<Form.Field>
-							<label>Пароль</label>
-							<input 
-								type="password" 
-								placeholder='Пароль'
-								ref={ref => this.password = ref} 
-								onChange={() => this.handleInputChange('password')} />
-						</Form.Field>
-						<Message
-							error
-							header='Войти не удалось..'
-							content={error} />
-						<Button 
-							primary
-							type='submit'
-							floated='right'
-							disabled={!email || !password || sendingRequest}
-							loading={sendingRequest}
-							onClick={this.submit} >
-							Войти
-						</Button>
-					</Form>
-				</SSegment>
-			</Fragment>
+			<SSegment basic>
+				<Form error={!!error}>
+					<Form.Field>
+						<label>E-mail</label>
+						<input 
+							type="email" 
+							placeholder='E-mail'
+							ref={ref => this.email = ref} 
+							onChange={() => this.handleInputChange('email')} />
+					</Form.Field>
+					<Form.Field>
+						<label>Пароль</label>
+						<input 
+							type="password" 
+							placeholder='Пароль'
+							ref={ref => this.password = ref} 
+							onChange={() => this.handleInputChange('password')} />
+					</Form.Field>
+					<Message
+						error
+						header='Войти не удалось..'
+						content={error} />
+					<Button 
+						primary
+						type='submit'
+						floated='right'
+						disabled={!email || !password || sendingRequest}
+						loading={sendingRequest}
+						onClick={this.submit} >
+						Войти
+					</Button>
+				</Form>
+			</SSegment>
 		)
 	}
 }
