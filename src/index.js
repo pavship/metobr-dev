@@ -8,6 +8,8 @@ import { ApolloProvider } from 'react-apollo'
 import defaults from './apollo/defaults'
 import resolvers from './apollo/resolvers'
 
+import { ThemeProvider } from 'styled-components'
+import { theme } from './components/shared/styled-semantic'
 
 import { AUTH_TOKEN } from './constants'
 
@@ -35,12 +37,14 @@ const client = new ApolloClient({
 const token = localStorage.getItem(AUTH_TOKEN)
 
 ReactDOM.render(
-	<ApolloProvider client={client}>
-		<App
-      token={token}
-      client={client}
-    />
-	</ApolloProvider>
+	<ThemeProvider theme={theme}>
+		<ApolloProvider client={client}>
+			<App
+				token={token}
+				client={client}
+			/>
+		</ApolloProvider>
+	</ThemeProvider>
 , document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change

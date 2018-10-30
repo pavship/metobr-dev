@@ -26,8 +26,9 @@ export const theme = {
 	}
 }
 const getThemeColor = (color) => theme.colors[color] || color
-const baseSet = ({ theme, bb, bc, w, mw, m, mt, ml, p, pl, pr, fs, fw, c, lh, ta, ws }) => {
+const baseSet = ({ theme, bt, bb, bc, w, mw, m, mt, ml, p, pl, pr, fs, fw, c, lh, ta, ws }) => {
 	return `
+		${bt 	? `border-top: ${bt};`								: ''}
 		${bb 	? `border-bottom: ${bb};`							: ''}
 		${bc 	? `background-color: ${bc};`					: ''}
 		${w 	? `width: ${theme.widths[w] || w};`		: ''}

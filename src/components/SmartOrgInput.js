@@ -11,7 +11,7 @@ class SmartOrgInput extends Component {
 		setField(name, {value: newVal})
 	}
 	render() {
-		const { field: {curVal: value} , ...rest } = this.props
+		const { field: {curVal: value}, setField, ...rest } = this.props
 		return (
 			<Input
 				{...rest}

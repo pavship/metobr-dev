@@ -38,7 +38,7 @@ class EnquiryForm extends Component {
                 required
                 // label='ИНН'
               >
-                <label>ИНН</label>
+                <Label>ИНН</Label>
 								<SmartOrgInput
 									field={orgId}
 									setField={setField}

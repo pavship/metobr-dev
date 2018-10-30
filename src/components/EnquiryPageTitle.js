@@ -5,6 +5,7 @@ const EnquiryPageTitle = () => {
   return (
     <CenteredContainer
       bc='rgb(243, 244, 245)'
+      bt='1px solid rgb(213, 214, 215)'
       bb='1px solid rgb(213, 214, 215)'
       c='rgba(0,0,0,.8)'
       fs='calc(24rem/14)'
