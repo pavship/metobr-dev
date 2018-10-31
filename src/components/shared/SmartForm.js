@@ -46,10 +46,10 @@ class SmartForm extends Component {
 		this.props.submit(entity)
 	}
 	render() {
-		const { children } = this.props
+		const { children, errSkipFields } = this.props
 		const requiredIsEmpty = this.requiredFields.some(f => !this.state[f].curVal)
 		const diff = this.isNewEntity ? null : this.fields.map(f => this.state[f].diff).includes(true)
-		const err = this.fields.map(f => this.state[f].err).find(err => !!err)
+		const err = this.fields.filter(f => !errSkipFields.includes(f)).map(f => this.state[f].err).find(err => !!err)
 		const state = {
 			disabled: (!this.isNewEntity && !diff) || requiredIsEmpty || !!err,
 			err: err || this.props.err,

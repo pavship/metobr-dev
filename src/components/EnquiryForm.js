@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Form, Button, Message } from 'semantic-ui-react'
+import { Form, Button, Message, Input } from 'semantic-ui-react'
 import { Div, Span, A, Label, Section } from './shared/styled-semantic.js'
 import EnquiryOrgSection from './EnquiryOrgSection';
 import SmartForm from './shared/SmartForm';
 import SmartOrgInput from './SmartOrgInput.js';
+import CenteredContainer from './common/CenteredContainer.js';
 
 const enquiry = {
   orgId: ''
@@ -15,7 +16,7 @@ class EnquiryForm extends Component {
     err: null
   }
   render() {
-    const { err } = this.state
+    const { loading, err } = this.state
     return <>
       <SmartForm
         isNewEntity={true}
@@ -23,6 +24,7 @@ class EnquiryForm extends Component {
         requiredFields={['orgId']}
         submit={this.submit}
         err={err}
+        errSkipFields={['orgId']}
       >
         {({
 					disabled,
@@ -32,20 +34,29 @@ class EnquiryForm extends Component {
 					formState: { orgId }
 				}) => <>
           <EnquiryOrgSection>
-            <Form>
-              <Form.Field
-                inline
-                required
-                // label='ИНН'
-              >
-                <Label>ИНН</Label>
-								<SmartOrgInput
-									field={orgId}
-									setField={setField}
-								/>
-							</Form.Field>
-						</Form>
+          <SmartOrgInput
+						field={orgId}
+						setField={setField}
+					/>
           </EnquiryOrgSection>
+          <CenteredContainer
+            p='1rem 0'
+          >
+						{err &&
+							<Message
+								error
+								header={err.title}
+								content={err.message}
+							/>
+						}
+						<Button
+							primary
+							content='Отправить заявку'
+							disabled={disabled}
+							loading={loading}
+							onClick={submit}
+						/>
+          </CenteredContainer>
         </>}
       </SmartForm>
       

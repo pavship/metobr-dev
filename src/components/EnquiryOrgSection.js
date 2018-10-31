@@ -8,6 +8,7 @@ const EnquiryOrgSection = ({ children }) => {
     <CenteredContainer
       p='1rem 0'
       bb='1px solid rgb(213, 214, 215)'
+      fw='bold'
     >
       {children}
     </CenteredContainer>
