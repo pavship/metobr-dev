@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Dropdown } from 'semantic-ui-react'
 import { Label, Input } from './shared/styled-semantic.js'
+import SmartInput from './shared/SmartInput'
 import InputMask from 'react-input-mask';
 
 const countryOtions = [
@@ -31,23 +32,34 @@ class SmartFormField extends Component {
         inline
         error={!!err}
         required={required}
-      >        <Label>{label || 'Телефон'}</Label>
-        <InputMask
-          mask={
-            country === 'rus'
-            ? '( 999 ) 999-99-99'
-            : ''
-          }
-          value={curVal}
-          onChange={(e) => setField(name, { value: e.target.value })}
-        >
-          {(inputProps) =>
-            <Input
-              placeholder={
-                country === 'rus'
-                ? 'Введите Ваш телефон'
-                : 'Телефон с кодом страны'
+      >
+        <Label>{label || 'Телефон'}</Label>
+        {country === 'rus'
+          ? <InputMask
+              mask='( 999 ) 999-99-99'
+              value={curVal}
+              onChange={(e) => setField(name, { value: e.target.value })}
+            >
+              {(inputProps) =>
+                <Input
+                  w='270px !important'
+                  placeholder='Введите Ваш телефон'
+                  label={
+                    <Dropdown
+                      tabIndex={-1}
+                      defaultValue={country}
+                      options={countryOtions}
+                      onChange={(e, { value }) => this.setState({ country: value })}
+                    />
+                  }
+                  {...rest}
+                  {...inputProps}
+                />
               }
+            </InputMask>
+          : <SmartInput
+              w='270px !important'
+              placeholder='Телефон с кодом страны'
               label={
                 <Dropdown
                   tabIndex={-1}
@@ -56,11 +68,11 @@ class SmartFormField extends Component {
                   onChange={(e, { value }) => this.setState({ country: value })}
                 />
               }
+              field={field}
+              setField={setField}
               {...rest}
-              w='270px !important'
             />
-          }
-        </InputMask>
+        }
       </Form.Field>
     )
   }
