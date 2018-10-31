@@ -8,6 +8,8 @@ const SmartFormField = ({
   required,
   field,
   setField,
+  inputLabel,
+  inputLabelPosition,
   ...rest
 }) => {
   const { err } = field
@@ -24,6 +26,8 @@ const SmartFormField = ({
         field={field}
         setField={setField}
         w='270px !important'
+        label={inputLabel}
+        labelPosition={inputLabelPosition}
       />
     </Form.Field>
   )

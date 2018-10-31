@@ -3,9 +3,9 @@ import { Form, Dropdown } from 'semantic-ui-react'
 import { Label, Input } from './shared/styled-semantic.js'
 import InputMask from 'react-input-mask';
 
-const options = [
-  { key: '.com', text: '+7', value: 'rus' },
-  { key: '.net', text: 'other', value: 'other' },
+const countryOtions = [
+  { key: 'rus', text: '+7', value: 'rus' },
+  { key: 'other', text: 'other', value: 'other' },
 ]
 
 class SmartFormField extends Component {
@@ -24,7 +24,7 @@ class SmartFormField extends Component {
       setField,
       ...rest
     } = this.props
-    const { curValue, err } = field
+    const { name, curVal, err } = field
     const { country } = this.state
     return (
       <Form.Field
@@ -38,8 +38,8 @@ class SmartFormField extends Component {
             ? '( 999 ) 999-99-99'
             : ''
           }
-          value={curValue}
-          onChange={(e) => console.log('yo! > ',e.target.value)}
+          value={curVal}
+          onChange={(e) => setField(name, { value: e.target.value })}
         >
           {(inputProps) =>
             <Input
@@ -52,7 +52,7 @@ class SmartFormField extends Component {
                 <Dropdown
                   tabIndex={-1}
                   defaultValue={country}
-                  options={options}
+                  options={countryOtions}
                   onChange={(e, { value }) => this.setState({ country: value })}
                 />
               }
