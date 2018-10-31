@@ -1,18 +1,18 @@
 import React from 'react'
-import OrgSectionHeader from './OrgSectionHeader';
+import PersonSectionHeader from './PersonSectionHeader';
 import CenteredContainer from './common/CenteredContainer';
 
-const EnquiryOrgSection = ({ children }) => {
+const EnquiryPersonSection = ({ children }) => {
   return <>
-    <OrgSectionHeader />
+    <PersonSectionHeader />
     <CenteredContainer
       p='1rem 0'
       bb='1px solid rgb(213, 214, 215)'
-      fs='calc(18rem/14)'
+      // fs='calc(18rem/14)'
     >
       {children}
     </CenteredContainer>
   </>
 }
 
-export default EnquiryOrgSection
+export default EnquiryPersonSection

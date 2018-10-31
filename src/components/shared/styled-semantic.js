@@ -11,6 +11,7 @@ import {
 	Button as SButton,
 	Message as SMessage,
 	Popup as SPopup,
+	Input as SInput,
 	Dropdown as SDropdown
 } from 'semantic-ui-react'
 
@@ -26,11 +27,12 @@ export const theme = {
 	}
 }
 const getThemeColor = (color) => theme.colors[color] || color
-const baseSet = ({ theme, bt, bb, bc, w, mw, m, mt, ml, p, pl, pr, fs, fw, c, lh, ta, ws }) => {
+const baseSet = ({ theme, bt, bb, bc, d, w, mw, m, mt, ml, p, pl, pr, fs, fw, c, lh, ta, ws }) => {
 	return `
 		${bt 	? `border-top: ${bt};`								: ''}
 		${bb 	? `border-bottom: ${bb};`							: ''}
 		${bc 	? `background-color: ${bc};`					: ''}
+		${d 	? `display: ${d};`										: ''}
 		${w 	? `width: ${theme.widths[w] || w};`		: ''}
 		${mw 	? `max-width: ${mw};`									: ''}
 		${m 	? `margin: ${m};`											: ''}
@@ -97,6 +99,7 @@ export const Header = styled(HeaderWithFilteredProps)`
 `
 
 export const Label = styled.label`
+	${props => baseSet(props)}
 	width: ${props => props.theme.widths.formLabel} !important;
 	margin-right: 0 !important;
 `
@@ -232,6 +235,15 @@ export const Popup = styled(PopupWithFilteredProps)`
 		${props => !props.showIf && `{
 			opacity: 0;
 		}`}
+	}
+`
+
+const InputPropFilter = ({ w, ...rest }) => (
+	<SInput {...rest} />
+)
+export const Input = styled(InputPropFilter)`
+	&&&& {
+		${props => baseSet(props)}
 	}
 `
 

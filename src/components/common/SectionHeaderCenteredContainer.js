@@ -1,7 +1,7 @@
 import React from 'react'
 import CenteredContainer from './CenteredContainer';
 
-const SectionHeaderCenteredContainer = () => {
+const SectionHeaderCenteredContainer = ({ children }) => {
   return (
     <CenteredContainer
       p='calc(5rem/14) 0'
@@ -11,7 +11,7 @@ const SectionHeaderCenteredContainer = () => {
       lh='normal'
       bb='1px solid rgb(213, 214, 215)'
     >
-      1. Организация
+      {children}
     </CenteredContainer>
   )
 }

@@ -27,7 +27,6 @@ class SmartOrgInput extends Component {
 		this.setState({ loading: true, err: null })
 		try {
 			const res = await this.props.createOrg({ variables: { inn } })
-			console.log('res > ', res)
 			const { id: orgId, name: orgName } = res.data.createOrg
 			if (!this.componentIsMounted) return
 			this.setState({ orgName, loading: false })
@@ -46,7 +45,6 @@ class SmartOrgInput extends Component {
 	render() {
 		const { field: { curVal }, setField, createOrg, ...rest } = this.props
 		const { inn, loading, err, orgName } = this.state
-		console.log('err > ', err)
 		if (!orgName) return <>
 			<Form
 				error
@@ -80,7 +78,8 @@ class SmartOrgInput extends Component {
 				color='green'
 			/>
 			<Span
-				m='calc(9rem/14) 0'
+				d='inline-block'
+				m='calc(9.5rem/14) .45rem'
 			>
 				{orgName}
 			</Span>
