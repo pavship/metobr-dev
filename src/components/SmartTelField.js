@@ -9,7 +9,7 @@ const countryOtions = [
   { key: 'other', text: 'other', value: 'other' },
 ]
 
-class SmartFormField extends Component {
+class SmartTelField extends Component {
   state = {
     country: 'rus'
   }
@@ -78,4 +78,4 @@ class SmartFormField extends Component {
   }
 }
 
-export default SmartFormField
+export default SmartTelField

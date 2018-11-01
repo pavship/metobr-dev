@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import debounce from 'lodash/debounce';
-import { Input } from './styled-semantic.js'
+import WrappedDraftEditor from './shared/WrappedDraftEditor'
 
-class SmartInput extends Component {
+class SmartNoteInput extends Component {
+	editorRef = React.createRef()
 	state = {
 		value: this.props.field.curVal || ''
 	}
 	debouncedSetField = debounce(
-		(name, { value }) => this.props.setField(name, { value })
+		(name, { value }) => {
+
+			this.props.setField(name, { value })
+		}
 	, 250)
 	handleInputChange = ( e, { value } ) => {
 		// TODO validate and parse according to input type
@@ -21,17 +25,21 @@ class SmartInput extends Component {
 		this.debouncedSetField(name, { value: newVal })
 	}
 	render() {
-		const { field: { curVal }, setField, type, ...rest } = this.props
+		const {
+			field: { diff },
+			setField,
+			...rest
+		} = this.props
 		const { value } = this.state
 		return (
-			<Input
+			<WrappedDraftEditor
 				{...rest}
-				type={type === 'int' ? 'number' : type}
-				value={value}
-				onChange={this.handleInputChange}
+				diff={diff}
+				ref={this.editorRef}
+				diff={diff}
 			/>
 		)
 	}
 }
 
-export default SmartInput
+export default SmartNoteInput

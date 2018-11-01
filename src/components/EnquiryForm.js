@@ -10,6 +10,7 @@ import SmartFormField from './SmartFormField.js';
 import SmartTelField from './SmartTelField.js';
 import EnquiryModelSection from './EnquiryModelSection.js';
 import LocalDatePicker from './shared/LocalDatePicker.js';
+import SmartNoteField from './SmartNoteField.js';
 
 const enquiry = {
   orgId: '',
@@ -22,7 +23,8 @@ const enquiry = {
   modelName: '',
   qty: '',
   period: 'none',
-  deadlineDateLocal: ''
+  deadlineDateLocal: '',
+  htmlText: ''
 }
 
 const periodOtions = [
@@ -52,7 +54,7 @@ class EnquiryForm extends Component {
 					err,
 					setField,
 					submit,
-					formState: { orgId, lName, fName, mName, regName, email, tel, modelName, qty, period, deadlineDateLocal }
+					formState: { orgId, regName, email, tel, modelName, qty, period, deadlineDateLocal, htmlText }
 				}) => <>
           <EnquiryOrgSection>
             <SmartOrgInput
@@ -150,6 +152,12 @@ class EnquiryForm extends Component {
 									setField={setField}
 								/>
 							</Form.Field>
+              <SmartNoteField
+                label='Доп. информация'
+                placeholder='Опишите задачу и заготовку'
+                field={htmlText}
+                setField={setField}
+              />
               {err && err.message &&
                 <Message
                   error

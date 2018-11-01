@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "apollo-boost": "^0.1.16",
+    "draft-js": "^0.10.5",
+    "draft-js-export-html": "^1.2.0",
     "graphql": "^14.0.2",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
