@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Form, Button, Message, Dropdown, Input } from 'semantic-ui-react'
-import { Div, Span, A, Label, Section } from './shared/styled-semantic.js'
+import { Form, Button, Message, Dropdown, Checkbox } from 'semantic-ui-react'
+import { Label, FormField } from './shared/styled-semantic.js'
 import SmartForm from './shared/SmartForm';
 import CenteredContainer from './common/CenteredContainer.js';
 import EnquiryOrgSection from './EnquiryOrgSection';
@@ -24,7 +24,9 @@ const enquiry = {
   qty: '',
   period: 'none',
   deadlineDateLocal: '',
-  htmlText: ''
+  htmlText: '',
+  hasAgreedToRules: true,
+  gather3rdPartyOffers: false,
 }
 
 const periodOtions = [
@@ -44,7 +46,7 @@ class EnquiryForm extends Component {
       <SmartForm
         isNewEntity={true}
         entity={enquiry}
-        requiredFields={['orgId', 'regName', 'email', 'tel', 'qty', 'period']}
+        requiredFields={['orgId', 'regName', 'email', 'tel', 'qty', 'period', 'hasAgreedToRules']}
         submit={this.submit}
         err={err}
         errSkipFields={['orgId']}
@@ -54,7 +56,7 @@ class EnquiryForm extends Component {
 					err,
 					setField,
 					submit,
-					formState: { orgId, regName, email, tel, modelName, qty, period, deadlineDateLocal, htmlText }
+					formState: { orgId, regName, email, tel, modelName, qty, period, deadlineDateLocal, htmlText, hasAgreedToRules, gather3rdPartyOffers }
 				}) => <>
           <EnquiryOrgSection>
             <SmartOrgInput
@@ -176,7 +178,33 @@ class EnquiryForm extends Component {
 								header={err.title}
 								content={err.message}
 							/>
-						}
+            }
+            <Form>
+              <Form.Field required>
+                <Checkbox
+                  checked={hasAgreedToRules.curVal}
+                  onClick={() => setField('hasAgreedToRules', { value: !hasAgreedToRules.curVal})}
+                  label={
+                    <label>Я согласен с <a 
+                        href='https://www.google.com'
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >Правилами сайта</a>
+                    </label>
+                  }
+                />
+							</Form.Field>
+              <FormField
+                mb='1rem'
+              >
+                <Checkbox
+                  checked={gather3rdPartyOffers.curVal}
+                  onClick={() => setField('gather3rdPartyOffers', { value: !gather3rdPartyOffers.curVal})}
+                  label='Позволить собрать предложения других подрядчиков'
+                />
+							</FormField>
+            </Form>
 						<Button
 							primary
 							content='Отправить заявку'

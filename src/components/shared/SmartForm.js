@@ -30,7 +30,7 @@ class SmartForm extends Component {
 		this.setState({
 			[field]: {
 				...this.state[field],
-				...(value || value === '') && {
+				...(value !== 'undefined') && {
 					curVal: value,
 					...!this.isNewEntity && { diff: value !== this.state[field].oriVal },
 				},

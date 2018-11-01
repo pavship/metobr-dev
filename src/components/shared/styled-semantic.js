@@ -12,7 +12,8 @@ import {
 	Message as SMessage,
 	Popup as SPopup,
 	Input as SInput,
-	Dropdown as SDropdown
+	Dropdown as SDropdown,
+	Form as SForm
 } from 'semantic-ui-react'
 
 export const theme = {
@@ -27,7 +28,7 @@ export const theme = {
 	}
 }
 const getThemeColor = (color) => theme.colors[color] || color
-const baseSet = ({ theme, bt, bb, bc, c, d, fs, fw, lh, mw, m, mt, ml, p, pl, pr, pt, ta, va, w, ws }) => {
+const baseSet = ({ theme, bt, bb, bc, c, d, fs, fw, lh, mw, m, mb, mt, ml, p, pl, pr, pt, ta, va, w, ws }) => {
 	return `
 		${bt 	? `border-top: ${bt};`								: ''}
 		${bb 	? `border-bottom: ${bb};`							: ''}
@@ -39,6 +40,7 @@ const baseSet = ({ theme, bt, bb, bc, c, d, fs, fw, lh, mw, m, mt, ml, p, pl, pr
 		${lh 	? `line-height: ${lh};`								: ''}
 		${mw 	? `max-width: ${mw};`									: ''}
 		${m 	? `margin: ${m};`											: ''}
+		${mb 	? `margin-bottom: ${mb};`								: ''}
 		${mt 	? `margin-top: ${mt};`								: ''}
 		${ml 	? `margin-left: ${ml};`								: ''}
 		${p 	? `padding: ${p};`										: ''}
@@ -255,5 +257,14 @@ export const Dropdown = styled(SDropdown)`
 		&:hover {
 			border-color: rgba(34, 36, 38, 0.15);
 		}
+	}
+	`
+
+const FormFieldPropFilter = ({ w, ...rest }) => (
+	<SForm.Field {...rest} />
+)
+export const FormField = styled(FormFieldPropFilter)`
+	&&&& {
+		${props => baseSet(props)}
 	}
 `
