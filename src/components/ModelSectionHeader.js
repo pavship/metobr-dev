@@ -4,7 +4,7 @@ import SectionHeaderCenteredContainer from './common/SectionHeaderCenteredContai
 const ModelSectionHeader = () => {
   return (
     <SectionHeaderCenteredContainer >
-      3. Задание
+      3. Техническое задание
     </SectionHeaderCenteredContainer>
   )
 }

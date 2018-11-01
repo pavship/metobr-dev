@@ -43,7 +43,7 @@ class SmartFormField extends Component {
               {(inputProps) =>
                 <Input
                   w='270px !important'
-                  placeholder='Введите Ваш телефон'
+                  placeholder='Ваш номер телефона'
                   label={
                     <Dropdown
                       tabIndex={-1}

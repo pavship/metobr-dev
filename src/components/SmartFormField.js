@@ -19,7 +19,11 @@ const SmartFormField = ({
       error={!!err}
       required={required}
     >
-      <Label>{label}</Label>
+      <Label
+        va='middle !important'
+      >
+        {label}
+      </Label>
       <SmartInput
         {...rest}
         // onKeyDown={(e, t) => console.log('action > ',e.keyCode === 13)}

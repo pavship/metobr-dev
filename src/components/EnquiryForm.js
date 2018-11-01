@@ -9,6 +9,7 @@ import EnquiryPersonSection from './EnquiryPersonSection';
 import SmartFormField from './SmartFormField.js';
 import SmartTelField from './SmartTelField.js';
 import EnquiryModelSection from './EnquiryModelSection.js';
+import LocalDatePicker from './shared/LocalDatePicker.js';
 
 const enquiry = {
   orgId: '',
@@ -20,7 +21,8 @@ const enquiry = {
   tel: '',
   modelName: '',
   qty: '',
-  period: 'none'
+  period: 'none',
+  deadlineDateLocal: ''
 }
 
 const periodOtions = [
@@ -40,7 +42,7 @@ class EnquiryForm extends Component {
       <SmartForm
         isNewEntity={true}
         entity={enquiry}
-        requiredFields={['orgId', 'regName', 'email', 'tel', 'modelName', 'qty', 'period']}
+        requiredFields={['orgId', 'regName', 'email', 'tel', 'qty', 'period']}
         submit={this.submit}
         err={err}
         errSkipFields={['orgId']}
@@ -50,7 +52,7 @@ class EnquiryForm extends Component {
 					err,
 					setField,
 					submit,
-					formState: { orgId, lName, fName, mName, regName, email, tel, modelName, qty, period }
+					formState: { orgId, lName, fName, mName, regName, email, tel, modelName, qty, period, deadlineDateLocal }
 				}) => <>
           <EnquiryOrgSection>
             <SmartOrgInput
@@ -58,7 +60,9 @@ class EnquiryForm extends Component {
               setField={setField}
             />
           </EnquiryOrgSection>
-          <EnquiryPersonSection>
+          <EnquiryPersonSection
+            fields={[regName, email, tel]}
+          >
             <Form
               error
               // size='big'
@@ -84,7 +88,7 @@ class EnquiryForm extends Component {
               /> */}
               <SmartFormField
                 label='ФИО'
-                placeholder='Введите Ваше полное имя'
+                placeholder='Ваше полное имя'
                 required
                 field={regName}
                 setField={setField}
@@ -92,7 +96,7 @@ class EnquiryForm extends Component {
               <SmartFormField
                 type='email'
                 label='email'
-                placeholder='Введите Ваш email'
+                placeholder='Ваш email'
                 required
                 field={email}
                 setField={setField}
@@ -102,7 +106,7 @@ class EnquiryForm extends Component {
                 field={tel}
                 setField={setField}
               />
-              {err && err.message &&
+              {err && err.message && 
                 <Message
                   error
                   header={err.title}
@@ -118,14 +122,14 @@ class EnquiryForm extends Component {
             >
               <SmartFormField
                 label='Наименование изделия'
-                placeholder='Введите наименование'
+                placeholder='Наименование изделия'
                 field={modelName}
                 setField={setField}
               />
               <SmartFormField
-                type='number'
+                type='int'
                 label='Количество'
-                placeholder='Введите количество'
+                placeholder='Укажите потребность'
                 required
                 inputLabel={
                   <Dropdown
@@ -139,6 +143,13 @@ class EnquiryForm extends Component {
                 field={qty}
                 setField={setField}
               />
+              <Form.Field inline>
+                <Label>Крайний срок</Label>
+								<LocalDatePicker
+									field={deadlineDateLocal}
+									setField={setField}
+								/>
+							</Form.Field>
               {err && err.message &&
                 <Message
                   error

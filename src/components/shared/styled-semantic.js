@@ -27,13 +27,16 @@ export const theme = {
 	}
 }
 const getThemeColor = (color) => theme.colors[color] || color
-const baseSet = ({ theme, bt, bb, bc, d, w, mw, m, mt, ml, p, pl, pr, fs, fw, c, lh, ta, ws }) => {
+const baseSet = ({ theme, bt, bb, bc, c, d, fs, fw, lh, mw, m, mt, ml, p, pl, pr, ta, va, w, ws }) => {
 	return `
 		${bt 	? `border-top: ${bt};`								: ''}
 		${bb 	? `border-bottom: ${bb};`							: ''}
 		${bc 	? `background-color: ${bc};`					: ''}
+		${c 	? `color: ${c};`											: ''}
 		${d 	? `display: ${d};`										: ''}
-		${w 	? `width: ${theme.widths[w] || w};`		: ''}
+		${fs 	? `font-size: ${fs};`									: ''}
+		${fw 	? `font-weight: ${fw};`								: ''}
+		${lh 	? `line-height: ${lh};`								: ''}
 		${mw 	? `max-width: ${mw};`									: ''}
 		${m 	? `margin: ${m};`											: ''}
 		${mt 	? `margin-top: ${mt};`								: ''}
@@ -41,34 +44,32 @@ const baseSet = ({ theme, bt, bb, bc, d, w, mw, m, mt, ml, p, pl, pr, fs, fw, c,
 		${p 	? `padding: ${p};`										: ''}
 		${pl 	? `padding-left: ${pl};`							: ''}
 		${pr 	? `padding-right: ${pl};`							: ''}
-		${fs 	? `font-size: ${fs};`									: ''}
-		${fw 	? `font-weight: ${fw};`								: ''}
-		${c 	? `color: ${c};`											: ''}
-		${lh 	? `line-height: ${lh};`								: ''}
 		${ta 	? `text-align: ${ta};`								: ''}
+		${va 	? `vertical-align: ${va};`						: ''}
+		${w 	? `width: ${theme.widths[w] || w};`		: ''}
 		${ws 	? `word-spacing: ${ws};`							: ''}
 	`
 }
 
-const DivWithFilteredProps = ({ ml, inline, ...rest }) => (
+const DivPropFilter = ({ ml, inline, ...rest }) => (
 	<div {...rest} />
 )
-export const Div = styled(DivWithFilteredProps)`
+export const Div = styled(DivPropFilter)`
 	${props => props.inline && `display: inline-block;`}
 	${props => baseSet(props)}
 `
 
-const PWithFilteredProps = ({ ...rest }) => (
+const PPropFilter = ({ ...rest }) => (
 	<p {...rest} />
 )
-export const P = styled(PWithFilteredProps)`
+export const P = styled(PPropFilter)`
 	${props => baseSet(props)}
 `
 
-const SpanWithFilteredProps = ({ ml, ...rest }) => (
+const SpanPropFilter = ({ ml, ...rest }) => (
 	<span {...rest} />
 )
-export const Span = styled(SpanWithFilteredProps)`
+export const Span = styled(SpanPropFilter)`
 	${props => baseSet(props)}
 `
 
@@ -83,10 +84,10 @@ export const A = styled.a`
 	}`}
 `
 
-const HeaderWithFilteredProps = ({ inline, c, ...rest }) => (
+const HeaderPropFilter = ({ inline, c, ...rest }) => (
 	<SHeader {...rest} />
 )
-export const Header = styled(HeaderWithFilteredProps)`
+export const Header = styled(HeaderPropFilter)`
 	&&&& {
 		${props => baseSet(props)}
 	}
@@ -96,12 +97,6 @@ export const Header = styled(HeaderWithFilteredProps)`
 			padding: 0 1rem;
 		}`}
 	}
-`
-
-export const Label = styled.label`
-	${props => baseSet(props)}
-	width: ${props => props.theme.widths.formLabel} !important;
-	margin-right: 0 !important;
 `
 
 const DropdownIcon = ({active, disabled, ...rest}) => (
@@ -124,10 +119,10 @@ export const Caret = styled(DropdownIcon)`
 	}
 `
 
-const ButtonWithFilteredProps = ({ activeColor, menu, ...rest }) => (
+const ButtonPropFilter = ({ activeColor, menu, ...rest }) => (
 	<SButton {...rest} />
 )
-export const Button = styled(ButtonWithFilteredProps)`
+export const Button = styled(ButtonPropFilter)`
 	&&&& {
 		${props => baseSet(props)}
 	}
@@ -150,13 +145,13 @@ export const Button = styled(ButtonWithFilteredProps)`
 	}
 `
 
-const MessageWithFilteredProps = ({
+const MessagePropFilter = ({
 	section,
 	...rest
 }) => (
 	<SMessage {...rest} />
 )
-export const Message = styled(MessageWithFilteredProps)`
+export const Message = styled(MessagePropFilter)`
 	&&& {
 		${props => props.section && `
 			margin-top: 0;
@@ -227,15 +222,21 @@ export const Section = styled(SectionPropFiltered)`
 	}`}
 `
 
-const PopupWithFilteredProps = ({ showIf, ...rest }) => (
+const PopupPropFilter = ({ showIf, ...rest }) => (
 	<SPopup {...rest} />
 )
-export const Popup = styled(PopupWithFilteredProps)`
+export const Popup = styled(PopupPropFilter)`
 	&&& {
 		${props => !props.showIf && `{
 			opacity: 0;
 		}`}
 	}
+`
+
+export const Label = styled.label`
+	${props => baseSet(props)}
+	width: ${props => props.theme.widths.formLabel} !important;
+	margin-right: 0 !important;
 `
 
 const InputPropFilter = ({ w, ...rest }) => (
