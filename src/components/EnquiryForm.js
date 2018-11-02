@@ -196,7 +196,7 @@ class EnquiryForm extends Component {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                      >Правилами сайта</a>
+                      >Политикой конфиденциальности</a>
                     </label>
                   }
                 />
@@ -207,7 +207,7 @@ class EnquiryForm extends Component {
                 <Checkbox
                   checked={gather3rdPartyOffers.curVal}
                   onClick={() => setField('gather3rdPartyOffers', { value: !gather3rdPartyOffers.curVal})}
-                  label='Позволить собрать предложения других подрядчиков'
+                  label='Разрешить собирать предложения других подрядчиков'
                 />
 							</FormField>
             </Form>

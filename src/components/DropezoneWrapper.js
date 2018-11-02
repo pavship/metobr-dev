@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 
 import styled from 'styled-components'
-import { Button, Input as SInput } from 'semantic-ui-react'
-// import '../styles/dropzone.css'
+import { Button, Input } from 'semantic-ui-react'
 
 import Dropzone from 'react-dropzone'
 
@@ -10,6 +9,10 @@ const SDropzone = styled(Dropzone)`
 	display: inline-block !important;
 	input {
 		width: 231.5px !important;
+		cursor: pointer;
+		border-style: dashed !important;
+		outline: none !important;
+		color: transparent !important;
 	}
 	&.activeDropzone>div {
 		&>input {
@@ -22,17 +25,15 @@ const SDropzone = styled(Dropzone)`
 	}
 `
 
-const Input = styled(SInput)`
-	&&&& input {
-		/* width: 231.5px !important; */
-		border-style: dashed;
-		cursor: pointer;
-		:hover {
-			border-style: solid;
+const InputWrapper = styled.div`
+	:hover {
+		input {
+			border: 1px solid rgb(202, 203, 205) !important;
 		}
-	}
-	${SDropzone}.activeDropzone & {
-		border-color: violet !important;
+		button {
+			color: rgba(0,0,0,.8) !important;
+			background-color: rgb(202, 203, 205) !important;
+		}
 	}
 `
 
@@ -50,27 +51,14 @@ const DropzoneWrapper = styled.div`
 		background: rgba(0,0,0,.05);
 		color: rgba(0,0,0,.65);
 	}
-	${({ borderless, hasFocus, diff }) =>
-		borderless
-		&& !hasFocus
-		&& !diff && `
-			margin-left: -1em;
-			border: 1px solid white;
-			:hover {
-				background: rgba(0,0,0,.05);
-				color: rgba(0,0,0,.65);
-				cursor: pointer;
-			}
-		`
-	}
 `
 
 export default class DropezoneWrapper extends Component {
 	state = {
-		hasFocus: false
+		textInput: ''
 	}
 	render() {
-		const { hasFocus } = this.state
+		const { textInput } = this.state
 		const {
 			borderless,
 			diff,
@@ -79,18 +67,19 @@ export default class DropezoneWrapper extends Component {
 		} = this.props
 		return (
 			<SDropzone
-				// className='ignore'
-				// style={{display: 'inline-block'}}
-				//// activeStyle={{border: '1px solid green'}}
 				activeClassName='activeDropzone'
 				onDrop={(acceptedFiles) => {
 					console.log('dropped!')
 				}}
 			>
-				{/* <DropzoneWrapper>
-				</DropzoneWrapper>
-					<Button attached='right'>Right</Button> */}
-				<Input action={{ icon: 'download' }} placeholder='Перетащите сюда файлы' />
+				<InputWrapper>
+					<Input
+						action={{ icon: 'download' }} 
+						placeholder='Перетащите сюда файлы'
+						value={textInput}
+						onChange={() => this.setState({ textInput: '' })}
+					/>
+				</InputWrapper>
 			</SDropzone>
 		)
 	}
