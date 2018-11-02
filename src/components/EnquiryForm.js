@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Form, Button, Message, Dropdown, Checkbox } from 'semantic-ui-react'
+import { Form, Button, Dropdown, Checkbox } from 'semantic-ui-react'
 import { Label, FormField } from './shared/styled-semantic.js'
+import SmartErrorMessage from './common/SmartErrorMessage'
 import SmartForm from './shared/SmartForm';
 import CenteredContainer from './common/CenteredContainer.js';
 import EnquiryOrgSection from './EnquiryOrgSection';
@@ -28,7 +29,7 @@ const enquiry = {
   htmlText: '',
   hasAgreedToRules: true,
   gather3rdPartyOffers: false,
-  files: []
+  files: null
 }
 
 const periodOtions = [
@@ -112,11 +113,9 @@ class EnquiryForm extends Component {
                 field={tel}
                 setField={setField}
               />
-              {err && err.message && 
-                <Message
-                  error
-                  header={err.title}
-                  content={err.message}
+              {err && 
+                <SmartErrorMessage
+                  err={err}
                 />
               }
             </Form>
@@ -166,11 +165,10 @@ class EnquiryForm extends Component {
                 field={files}
                 setField={setField}
               />
-              {err && err.message &&
-                <Message
-                  error
-                  header={err.title}
-                  content={err.message}
+              {err && 
+                <SmartErrorMessage
+                  err={err}
+                  setField={setField}
                 />
               }
             </Form>
@@ -179,10 +177,8 @@ class EnquiryForm extends Component {
             p='1rem 0'
           >
 						{err &&
-							<Message
-								error
-								header={err.title}
-								content={err.message}
+							<SmartErrorMessage
+								err={err}
 							/>
             }
             <Form>

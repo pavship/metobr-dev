@@ -1,15 +1,31 @@
 import React, { Component } from 'react'
 
 import styled from 'styled-components'
-import { Button, Input } from 'semantic-ui-react'
+import { Input, Segment } from 'semantic-ui-react'
 
 import Dropzone from 'react-dropzone'
+
+const FileItem = styled(Input)`
+	width: 270px !important;
+	input {
+		cursor: default;
+		border-radius: 0 !important;
+		border-bottom: none !important;
+	}
+	&:first-child {
+		input {
+			border-radius: calc(4rem/14) calc(4rem/14) 0 0 !important;
+		}
+	}
+
+`
 
 const SDropzone = styled(Dropzone)`
 	display: inline-block !important;
 	input {
 		width: 231.5px !important;
 		cursor: pointer;
+		text-align: center !important;
 		border-style: dashed !important;
 		outline: none !important;
 		color: transparent !important;
@@ -21,11 +37,23 @@ const SDropzone = styled(Dropzone)`
 		&>button {
 			border: 1px solid #21ba45 !important;
 			border-left: none !important;
+			background-color: #21ba45 !important;
+			color: white !important;
 		}
 	}
 `
 
-const InputWrapper = styled.div`
+const DropzoneWrapper = styled.div`
+	display: inline-block;
+	:not(:first-child) {
+		input {
+			border-top-left-radius: 0 !important;
+			border-top-style: solid !important;
+		}
+		button {
+			border-top-right-radius: 0 !important;
+		}
+	}
 	:hover {
 		input {
 			border: 1px solid rgb(202, 203, 205) !important;
@@ -37,50 +65,44 @@ const InputWrapper = styled.div`
 	}
 `
 
-const DropzoneWrapper = styled.div`
-	display: inline-block;
-	width: 270px;
-	min-height: 38px;
-	cursor: pointer;
-	padding: calc(8.5rem/14) 1em;
-	line-height: calc(19rem/14);
-	border: 1px solid rgba(34,36,38,.15);
-	border-radius: calc(4rem/14);
-	transition: all .1s ease;
-	:hover {
-		background: rgba(0,0,0,.05);
-		color: rgba(0,0,0,.65);
-	}
-`
-
 export default class DropezoneWrapper extends Component {
 	state = {
 		textInput: ''
 	}
 	render() {
-		const { textInput } = this.state
 		const {
-			borderless,
-			diff,
-			forwardedRef,
-			...rest
+			files,
+			onDrop
 		} = this.props
+		const { textInput } = this.state
 		return (
-			<SDropzone
-				activeClassName='activeDropzone'
-				onDrop={(acceptedFiles) => {
-					console.log('dropped!')
+			<div
+				style={{
+					display: 'inline-block',
+					width: '270px'
 				}}
 			>
-				<InputWrapper>
-					<Input
-						action={{ icon: 'download' }} 
-						placeholder='Перетащите сюда файлы'
-						value={textInput}
-						onChange={() => this.setState({ textInput: '' })}
+				{files.map(({ name }) =>
+					<FileItem
+						key={name}
+						value={name}
+						onFocus={e => e.target.blur()}
 					/>
-				</InputWrapper>
-			</SDropzone>
+				)}
+				<DropzoneWrapper>
+					<SDropzone
+						activeClassName='activeDropzone'
+						onDrop={onDrop}
+					>
+							<Input
+								action={{ icon: 'download' }} 
+								placeholder='Перетащите сюда файлы'
+								value=''
+								onFocus={e => e.target.blur()}
+							/>
+					</SDropzone>
+				</DropzoneWrapper>
+			</div>
 		)
 	}
 }

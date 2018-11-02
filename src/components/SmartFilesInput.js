@@ -3,32 +3,44 @@ import DropezoneWrapper from './DropezoneWrapper'
 
 export default class SmartFilesInput extends Component {
 	state = {
-		value: this.props.field.curVal || ''
+		files: this.props.field.curVal || []
 	}
-	// handleInputChange = ( e, { value } ) => {
-	// 	// TODO validate and parse according to input type
-	// 	const { type, field: { name }, setField } = this.props
-	// 	let newVal = value
-	// 	if (type === 'int' && value !== '') {
-	// 		newVal = parseInt(value, 10)
-	// 		if (!newVal) return
-	// 	}
-	// 	this.setState({ value: newVal })
-	// 	this.debouncedSetField(name, { value: newVal })
-	// }
+	handleDrop = (newFiles, rejectedFiles) => {
+		console.log('newFiles > ', newFiles)
+		const { field: { name }, setField } = this.props
+		const { files } = this.state
+		const fileNames = files.map(f => f.name)
+		// validate name uniqueness
+		const [uniq, nonUniq] = newFiles.reduce((res, f) => {
+			fileNames.includes(f.name) ? res[1].push(f) : res[0].push(f)
+			return res
+		}, [[],[]])
+		if (nonUniq.length) setField( name, { 
+			err: {
+				title: 'Не допускается повторение имен фалов',
+				items: nonUniq.map(f => f.name),
+				isDismissable: true,
+				fieldName: 'files'
+			}
+		})
+		this.setState({ files: [ ...this.state.files, ...uniq ] })
+		this.upload(uniq)
+	}
+	upload = (files) => {
+		
+	}
 	render() {
 		const {
 			field: { diff },
 			setField,
 			...rest
 		} = this.props
-		const { value } = this.state
+		const { files } = this.state
 		return (
 			<DropezoneWrapper
 				{...rest}
-				diff={diff}
-				ref={this.editorRef}
-				diff={diff}
+				files={files}
+				onDrop={this.handleDrop}
 			/>
 		)
 	}
