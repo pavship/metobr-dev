@@ -1,12 +1,10 @@
 import React from 'react'
 import SectionHeaderCenteredContainer from './common/SectionHeaderCenteredContainer';
 
-const ModelSectionHeader = () => {
+export default () => {
   return (
     <SectionHeaderCenteredContainer >
       3. Техническое задание
     </SectionHeaderCenteredContainer>
   )
 }
-
-export default ModelSectionHeader

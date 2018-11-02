@@ -8,9 +8,10 @@ import SmartOrgInput from './SmartOrgInput.js';
 import EnquiryPersonSection from './EnquiryPersonSection';
 import SmartFormField from './SmartFormField.js';
 import SmartTelField from './SmartTelField.js';
-import EnquiryModelSection from './EnquiryModelSection.js';
+import EnquiryTaskSection from './EnquiryTaskSection.js';
 import LocalDatePicker from './shared/LocalDatePicker.js';
 import SmartNoteField from './SmartNoteField.js';
+import SmartFileField from './SmartFileField.js';
 
 const enquiry = {
   orgId: '',
@@ -27,6 +28,7 @@ const enquiry = {
   htmlText: '',
   hasAgreedToRules: true,
   gather3rdPartyOffers: false,
+  files: []
 }
 
 const periodOtions = [
@@ -56,7 +58,7 @@ class EnquiryForm extends Component {
 					err,
 					setField,
 					submit,
-					formState: { orgId, regName, email, tel, modelName, qty, period, deadlineDateLocal, htmlText, hasAgreedToRules, gather3rdPartyOffers }
+					formState: { orgId, regName, email, tel, modelName, qty, period, deadlineDateLocal, htmlText, hasAgreedToRules, gather3rdPartyOffers, files }
 				}) => <>
           <EnquiryOrgSection>
             <SmartOrgInput
@@ -119,7 +121,7 @@ class EnquiryForm extends Component {
               }
             </Form>
           </EnquiryPersonSection>
-          <EnquiryModelSection>
+          <EnquiryTaskSection>
             <Form
               error
               // size='big'
@@ -160,6 +162,10 @@ class EnquiryForm extends Component {
                 field={htmlText}
                 setField={setField}
               />
+              <SmartFileField
+                field={files}
+                setField={setField}
+              />
               {err && err.message &&
                 <Message
                   error
@@ -168,7 +174,7 @@ class EnquiryForm extends Component {
                 />
               }
             </Form>
-          </EnquiryModelSection>
+          </EnquiryTaskSection>
           <CenteredContainer
             p='1rem 0'
           >

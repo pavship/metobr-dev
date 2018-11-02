@@ -1,9 +1,9 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
 import { Label } from './shared/styled-semantic.js'
-import SmartNoteInput from './SmartNoteInput.js'
+import SmartFilesInput from './SmartFilesInput.js'
 
-const SmartNoteField = ({
+export default ({
   label,
   required,
   ...rest
@@ -17,13 +17,11 @@ const SmartNoteField = ({
         va='top !important'
         pt='calc(9rem/14)'
       >
-        {label || 'Примечание'}
+        {label || 'Файлы'}
       </Label>
-      <SmartNoteInput
+      <SmartFilesInput
         {...rest}
       />
     </Form.Field>
   )
 }
-
-export default SmartNoteField

@@ -1,10 +1,10 @@
 import React from 'react'
-import ModelSectionHeader from './ModelSectionHeader';
+import TaskSectionHeader from './TaskSectionHeader';
 import CenteredContainer from './common/CenteredContainer';
 
-const EnquiryModelSection = ({ children }) => {
+export default ({ children }) => {
   return <>
-    <ModelSectionHeader />
+    <TaskSectionHeader />
     <CenteredContainer
       p='1rem 0'
       bb='1px solid rgb(213, 214, 215)'
@@ -13,5 +13,3 @@ const EnquiryModelSection = ({ children }) => {
     </CenteredContainer>
   </>
 }
-
-export default EnquiryModelSection
