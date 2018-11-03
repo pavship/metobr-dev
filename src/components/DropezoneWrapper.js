@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
 
 import styled from 'styled-components'
-import { Input, Segment } from 'semantic-ui-react'
+import { Input, Icon, Button } from 'semantic-ui-react'
 
 import Dropzone from 'react-dropzone'
 
 const FileItem = styled(Input)`
-	width: 270px !important;
-	input {
-		cursor: default;
-		border-radius: 0 !important;
-		border-bottom: none !important;
-	}
-	&:first-child {
+	&&&& {
+		width: 308.5px !important;
 		input {
-			border-radius: calc(4rem/14) calc(4rem/14) 0 0 !important;
+			cursor: default;
+			border-radius: 0 !important;
+			border-bottom: none !important;
+			border-right: 1px solid rgba(34,36,38,.15) !important;
+		}
+		:first-child {
+			input {
+				border-radius: calc(4rem/14) calc(4rem/14) 0 0 !important;
+			}
 		}
 	}
-
 `
 
 const SDropzone = styled(Dropzone)`
@@ -65,6 +67,17 @@ const DropzoneWrapper = styled.div`
 	}
 `
 
+const SuccessIcon = styled(Icon)`
+	right: 38.5px !important;
+`
+
+const CloseButton = styled(Button)`
+	&&&&& {
+		border: none !important;
+		box-shadow: none !important;
+	}
+`
+
 export default class DropezoneWrapper extends Component {
 	state = {
 		textInput: ''
@@ -72,9 +85,11 @@ export default class DropezoneWrapper extends Component {
 	render() {
 		const {
 			files,
-			onDrop
+			onDrop,
+			cancelUpload
 		} = this.props
 		const { textInput } = this.state
+		console.log('files > ', files)
 		return (
 			<div
 				style={{
@@ -82,12 +97,28 @@ export default class DropezoneWrapper extends Component {
 					width: '270px'
 				}}
 			>
-				{files.map(({ name }) =>
+				{files.map(({ file: { name }, loading }) =>
 					<FileItem
 						key={name}
 						value={name}
 						onFocus={e => e.target.blur()}
-					/>
+						action
+						icon
+						loading={loading}
+					>
+						<input />
+						<SuccessIcon
+							name='check'
+							color='green'
+							onClick={(name) => cancelUpload(name)}
+						/>
+    				<CloseButton
+							basic
+							color='red'
+							icon='close'
+							onClick={(name) => cancelUpload(name)}
+						/>
+					</FileItem>
 				)}
 				<DropzoneWrapper>
 					<SDropzone

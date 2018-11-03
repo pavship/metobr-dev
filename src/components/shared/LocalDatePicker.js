@@ -48,7 +48,6 @@ class LocalDatePicker extends Component {
 		}
 	}
 	handleDayPickerHide = () => {
-		console.log('handleDayPickerHide > ')
 		const { field: { name }, setField } = this.props
 		const { value, isNotValid } = this.state
 		if (value && isNotValid) {

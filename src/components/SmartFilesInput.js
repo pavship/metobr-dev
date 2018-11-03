@@ -1,35 +1,108 @@
 import React, { Component } from 'react'
 import DropezoneWrapper from './DropezoneWrapper'
+import axios from 'axios'
+import cuid from 'cuid'
+import produce from 'immer'
+
+const uplodeLinkUrl = 'https://cloud-api.yandex.net/v1/disk/resources/upload'
 
 export default class SmartFilesInput extends Component {
 	state = {
-		files: this.props.field.curVal || []
+		files: []
 	}
-	handleDrop = (newFiles, rejectedFiles) => {
-		console.log('newFiles > ', newFiles)
-		const { field: { name }, setField } = this.props
+	handleDrop = (droppedFiles, rejectedFiles) => {
+		const { field, setField } = this.props
 		const { files } = this.state
-		const fileNames = files.map(f => f.name)
-		// validate name uniqueness
-		const [uniq, nonUniq] = newFiles.reduce((res, f) => {
-			fileNames.includes(f.name) ? res[1].push(f) : res[0].push(f)
-			return res
-		}, [[],[]])
-		if (nonUniq.length) setField( name, { 
+		const busyFileNames = files.map(f => f.file.name)
+		// filter out files with repeating file names
+		const errorBin = {
+			nonUniqFileNames: [],
+			oversizedFilesNames: rejectedFiles.map(f => f.name)
+		}
+		const uniqNamedFiles = droppedFiles.filter(f => {
+			const uniq = !busyFileNames.includes(f.name)
+			if (!uniq) errorBin.nonUniqFileNames.push(f.name)
+			return uniq
+		})
+		// const [uniq, nonUniq] = droppedFiles.reduce((res, f) => {
+		// 	busyFileNames.includes(f.name) ? res[1].push(f) : res[0].push(f)
+		// 	return res
+		// }, [[],[]])
+		// shown nonUniq names to user in dismissable ErrorMessage
+		if (errorBin.nonUniqFileNames.length) setField(field.name, { 
 			err: {
-				title: 'Не допускается повторение имен фалов',
-				items: nonUniq.map(f => f.name),
+				title: 'Не допускается повторение имен файлов',
+				items: errorBin.nonUniqFileNames,
 				isDismissable: true,
-				fieldName: 'files'
+				fieldName: field.name
 			}
 		})
-		this.setState({ files: [ ...this.state.files, ...uniq ] })
-		this.upload(uniq)
+		// files which pass validation are signed with uniq cuid
+		const addedFiles = uniqNamedFiles.map(f => ({ file: f, storeId: cuid(), loading: true }))
+		// add files to state
+		this.setState({
+			files: [
+				...files,
+				...addedFiles
+			]
+		})
+		// and upload
+		this.upload(addedFiles)
 	}
-	upload = (files) => {
-		
+	upload = async (files) => {
+		const { field, setField } = this.props
+		try {
+			await Promise.all(files.map(async f => {
+				const uploadLink = await axios({
+					url: uplodeLinkUrl,
+					method: 'get',
+					headers: {
+						'content-type': 'application/json',
+						'Authorization': 'OAuth AQAAAAACR6NbAAVG58EVND2U5UWhqlUL2ctI9P4',
+					},
+					params: {
+						path: `app:/${f.storeId}`,
+					}
+				})
+				console.log('uploadLink > ', uploadLink)
+				const data = new FormData()
+				data.append('file', f.file)
+				const uploadResponse = await axios({
+					url: uploadLink.data.href,
+					method:'put',
+					headers: {
+						'content-type': 'application/json',
+					},
+					data
+				})
+				console.log('uploadResponse > ', uploadResponse)
+			}))
+			console.log('this.state > ', this.state)
+			this.setState({
+				files: produce(this.state.files, draftFiles => {
+					draftFiles.forEach(f => 
+						files.map(f => f.storeId).includes(f.storeId) && delete f.loading
+					)
+				})
+			})
+		} catch (err) {
+			setField(field.name, {
+				err: {
+					title: 'Ошибка при загрузке файлов',
+					message: err.message,
+					isDismissable: true,
+					fieldName: field.name
+				}
+			})
+			console.log(err)
+			// TODO send notification with error info to developer
+		}
+	}
+	cancelUpload = (name) => {
+
 	}
 	render() {
+		console.log('render > ')
 		const {
 			field: { diff },
 			setField,
@@ -41,6 +114,7 @@ export default class SmartFilesInput extends Component {
 				{...rest}
 				files={files}
 				onDrop={this.handleDrop}
+				cancelUpload={this.cancelUpload}
 			/>
 		)
 	}

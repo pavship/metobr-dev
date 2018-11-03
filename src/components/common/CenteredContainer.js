@@ -8,7 +8,7 @@ const CenteredContainer = ({p, ...props}) => {
       {...props}
     >
       <Div
-        mw='860px'
+        mw='400px'
         m='0 auto'
         p={p}
         pl='.25rem'

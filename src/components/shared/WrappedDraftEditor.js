@@ -12,6 +12,9 @@ const EditorWrapper = styled.div`
 	border: 1px solid rgba(34,36,38,.15);
 	border-radius: calc(4rem/14);
 	transition: all .1s ease;
+	.DraftEditor-root {
+		z-index: 0;
+	}
 	.public-DraftEditorPlaceholder-root {
 		color: rgb(194, 195, 198);
 	}
