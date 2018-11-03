@@ -22,47 +22,35 @@ const FileItem = styled(Input)`
 	}
 `
 
-const SDropzone = styled(Dropzone)`
-	display: inline-block !important;
+const DropzoneWrapper = styled.div`
+	display: inline-block;
 	input {
 		width: 231.5px !important;
 		cursor: pointer;
 		text-align: center !important;
+		border-width: 2px !important;
 		border-style: dashed !important;
 		outline: none !important;
 		color: transparent !important;
 	}
-	&.activeDropzone>div {
-		&>input {
-			border: 1px solid #21ba45 !important;
-		}
-		&>button {
-			border: 1px solid #21ba45 !important;
-			border-left: none !important;
-			background-color: #21ba45 !important;
-			color: white !important;
-		}
-	}
-`
-
-const DropzoneWrapper = styled.div`
-	display: inline-block;
 	:not(:first-child) {
 		input {
 			border-top-left-radius: 0 !important;
+			border-top-width: 1px !important;
 			border-top-style: solid !important;
 		}
 		button {
 			border-top-right-radius: 0 !important;
 		}
 	}
-	:hover {
+	:hover, .activeDropzone {
 		input {
-			border: 1px solid rgb(202, 203, 205) !important;
+			border-color: rgb(0, 181, 173) !important;
 		}
 		button {
 			color: rgba(0,0,0,.8) !important;
-			background-color: rgb(202, 203, 205) !important;
+			background-color: rgb(0, 181, 173) !important;
+			color: white !important;
 		}
 	}
 `
@@ -121,7 +109,8 @@ export default class DropezoneWrapper extends Component {
 					</FileItem>
 				)}
 				<DropzoneWrapper>
-					<SDropzone
+					<Dropzone
+						className='ignore'
 						activeClassName='activeDropzone'
 						onDrop={onDrop}
 					>
@@ -131,7 +120,7 @@ export default class DropezoneWrapper extends Component {
 								value=''
 								onFocus={e => e.target.blur()}
 							/>
-					</SDropzone>
+					</Dropzone>
 				</DropzoneWrapper>
 			</div>
 		)
