@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
 import { Label } from './shared/styled-semantic.js'
-import SmartNoteInput from './SmartNoteInput.js'
+import WrappedDraftEditor from './shared/WrappedDraftEditor'
 
 const SmartNoteField = ({
   label,
@@ -19,7 +19,7 @@ const SmartNoteField = ({
       >
         {label || 'Примечание'}
       </Label>
-      <SmartNoteInput
+      <WrappedDraftEditor
         {...rest}
       />
     </Form.Field>

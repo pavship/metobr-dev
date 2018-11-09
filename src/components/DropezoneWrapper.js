@@ -77,7 +77,6 @@ export default class DropezoneWrapper extends Component {
 			cancelUpload
 		} = this.props
 		const { textInput } = this.state
-		console.log('files > ', files)
 		return (
 			<div
 				style={{

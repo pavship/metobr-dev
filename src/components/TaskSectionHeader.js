@@ -3,8 +3,10 @@ import SectionHeaderCenteredContainer from './common/SectionHeaderCenteredContai
 
 export default () => {
   return (
-    <SectionHeaderCenteredContainer >
-      3. Техническое задание
+    <SectionHeaderCenteredContainer
+      num='3'
+    >
+      Техническое задание
     </SectionHeaderCenteredContainer>
   )
 }

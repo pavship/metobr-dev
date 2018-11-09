@@ -27,6 +27,7 @@ class SmartForm extends Component {
 	}
 	setField = (field, {value, err}) => {
 		// console.log('field, value, err > ', field, value, err)
+		const prevErr = this.state[field].err
 		this.setState({
 			[field]: {
 				...this.state[field],
@@ -34,7 +35,8 @@ class SmartForm extends Component {
 					curVal: value,
 					...!this.isNewEntity && { diff: value !== this.state[field].oriVal },
 				},
-				err: err || null,
+				// persist dismissable error
+				err: err || (prevErr && prevErr.dissmisable && prevErr) || null,
 			}
 		})
 	}

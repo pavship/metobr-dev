@@ -2,54 +2,117 @@ import React, { Component } from 'react'
 import { Form, Button, Dropdown, Checkbox } from 'semantic-ui-react'
 import { Label, FormField } from './shared/styled-semantic.js'
 import SmartErrorMessage from './common/SmartErrorMessage'
-import SmartForm from './shared/SmartForm';
-import CenteredContainer from './common/CenteredContainer.js';
-import EnquiryOrgSection from './EnquiryOrgSection';
-import SmartOrgInput from './SmartOrgInput.js';
-import EnquiryPersonSection from './EnquiryPersonSection';
-import SmartFormField from './SmartFormField.js';
-import SmartTelField from './SmartTelField.js';
-import EnquiryTaskSection from './EnquiryTaskSection.js';
-import LocalDatePicker from './shared/LocalDatePicker.js';
-import SmartNoteField from './SmartNoteField.js';
-import SmartFileField from './SmartFileField.js';
+import SmartForm from './shared/SmartForm'
+import CenteredContainer from './common/CenteredContainer.js'
+import EnquiryOrgSection from './EnquiryOrgSection'
+import SmartOrgInput from './SmartOrgInput.js'
+import EnquiryPersonSection from './EnquiryPersonSection'
+import SmartFormField from './SmartFormField.js'
+import SmartTelField from './SmartTelField.js'
+import EnquiryTaskSection from './EnquiryTaskSection.js'
+import LocalDatePicker from './shared/LocalDatePicker.js'
+import SmartNoteField from './SmartNoteField.js'
+import SmartFileField from './SmartFileField.js'
 
+import { graphql, compose } from 'react-apollo'
+import { signupAndCreateEnquiry } from '../graphql/enquiry'
+
+// const enquiry = {
+//   orgId: '',
+//   // lName: '',
+//   // fName: '',
+//   // mName: '',
+//   regName: '',
+//   email: '',
+//   tel: '',
+//   country: 'rus',
+//   modelName: '',
+//   qty: '',
+//   period: 'none',
+//   deadlineDateLocal: '',
+//   htmlText: '',
+//   files: [],
+//   hasAgreedToRules: true,
+//   hasAgreedToSearch3rdParty: false,
+// }
 const enquiry = {
-  orgId: '',
-  lName: '',
-  fName: '',
-  mName: '',
-  regName: '',
-  email: '',
-  tel: '',
-  modelName: '',
-  qty: '',
-  period: 'none',
-  deadlineDateLocal: '',
-  htmlText: '',
+  country: "rus",
+  deadlineDateLocal: "2018-11-15",
+  email: "sdf@",
+  files: [
+    {name: "274832076.jpg", storeId: "cjo9it2ci00003a5rkxp8fr54"},
+    {name: "474533138.jpg", storeId: "cjo9ithej00013a5r8hxzn1qo"},
+    {name: "428283927.jpg", storeId: "cjo9iuhvi00023a5rvdq7wsgc"}
+  ],
   hasAgreedToRules: true,
-  gather3rdPartyOffers: false,
-  files: null
+  hasAgreedToSearch3rdParty: false,
+  htmlText: "<p>sdsdf</p>↵<p>sdfsfd</p>↵",
+  modelName: "sdf",
+  orgId: "cjo1wyt4c000t0850ndo82net",
+  period: "none",
+  qty: 21,
+  regName: "sdf",
+  tel: "( 123 ) ",
 }
 
+const countryOtions = [
+  { key: 'rus', text: '+7', value: 'rus' },
+  { key: 'other', text: 'other', value: 'other' },
+]
+
 const periodOtions = [
-  { key: 'rus', text: 'шт.', value: 'none' },
+  { key: 'none', text: 'шт.', value: 'none' },
   { key: 'month', text: 'шт. / месяц', value: 'month' },
   { key: 'year', text: 'шт. / год', value: 'year' },
 ]
 
 class EnquiryForm extends Component {
+  componentIsMounted = true
   state = {
     loading: false,
     err: null
   }
+  submit = async (variables) => {
+    console.log('variables > ', variables)
+		try {
+			this.setState({ loading: true })
+			const res = await this.props.signupAndCreateEnquiry({ variables })
+			if (!this.componentIsMounted) return
+      this.setState({ loading: false, err: null })
+      // TODO navigate to ConfirmationPage
+			// this.props.setDetails({
+			// 	type: 'Order',
+			// 	id: res.data.signupAndCreateEnquiry.id
+			// })
+		} catch (err) {
+			if (!this.componentIsMounted) return
+			this.setState({
+				loading: false,
+				err: {
+					title: `Оформить заявку не удалось..`,
+					message: err.message
+				}
+			})
+			console.log(err)
+		}
+	}
   render() {
     const { loading, err } = this.state
     return <>
       <SmartForm
         isNewEntity={true}
         entity={enquiry}
-        requiredFields={['orgId', 'regName', 'email', 'tel', 'qty', 'period', 'hasAgreedToRules']}
+        requiredFields={[
+          'orgId',
+          'regName',
+          'email',
+          'tel',
+          'country',
+          'modelName',
+          'qty',
+          'period',
+          'hasAgreedToRules'
+        ]}
         submit={this.submit}
         err={err}
         errSkipFields={['orgId']}
@@ -59,7 +122,21 @@ class EnquiryForm extends Component {
 					err,
 					setField,
 					submit,
-					formState: { orgId, regName, email, tel, modelName, qty, period, deadlineDateLocal, htmlText, hasAgreedToRules, gather3rdPartyOffers, files }
+          formState: {
+            orgId,
+            regName,
+            email,
+            tel,
+            country,
+            modelName,
+            qty,
+            period,
+            deadlineDateLocal,
+            htmlText,
+            files,
+            hasAgreedToRules,
+            hasAgreedToSearch3rdParty,
+          }
 				}) => <>
           <EnquiryOrgSection>
             <SmartOrgInput
@@ -71,7 +148,7 @@ class EnquiryForm extends Component {
             fields={[regName, email, tel]}
           >
             <Form
-              error
+              // error
               // size='big'
             >
               {/* <SmartFormField
@@ -112,30 +189,35 @@ class EnquiryForm extends Component {
                 required
                 field={tel}
                 setField={setField}
+                inputLabel={
+                  <Dropdown
+                    tabIndex={-1}
+                    defaultValue={country.curVal}
+                    options={countryOtions}
+                    onChange={(e, { value }) => setField('country', { value })}
+                  />
+                }
+                country={country.curVal}
               />
-              {err && 
-                <SmartErrorMessage
-                  err={err}
-                />
-              }
             </Form>
           </EnquiryPersonSection>
           <EnquiryTaskSection>
             <Form
               error
-              // size='big'
             >
               <SmartFormField
+                required
                 label='Наименование изделия'
                 placeholder='Наименование изделия'
                 field={modelName}
                 setField={setField}
               />
               <SmartFormField
+                required
                 type='int'
+                min='1'
                 label='Количество'
                 placeholder='Укажите потребность'
-                required
                 inputLabel={
                   <Dropdown
                     tabIndex={-1}
@@ -165,12 +247,6 @@ class EnquiryForm extends Component {
                 field={files}
                 setField={setField}
               />
-              {err && 
-                <SmartErrorMessage
-                  err={err}
-                  setField={setField}
-                />
-              }
             </Form>
           </EnquiryTaskSection>
           <CenteredContainer
@@ -178,7 +254,8 @@ class EnquiryForm extends Component {
           >
 						{err &&
 							<SmartErrorMessage
-								err={err}
+                err={err}
+                setField={setField}
 							/>
             }
             <Form>
@@ -201,8 +278,11 @@ class EnquiryForm extends Component {
                 mb='1rem'
               >
                 <Checkbox
-                  checked={gather3rdPartyOffers.curVal}
-                  onClick={() => setField('gather3rdPartyOffers', { value: !gather3rdPartyOffers.curVal})}
+                  checked={hasAgreedToSearch3rdParty.curVal}
+                  onClick={() => setField(
+                    'hasAgreedToSearch3rdParty',
+                    { value: !hasAgreedToSearch3rdParty.curVal }
+                  )}
                   label='Разрешить собирать предложения других подрядчиков'
                 />
 							</FormField>
@@ -222,4 +302,8 @@ class EnquiryForm extends Component {
   }
 }
 
-export default EnquiryForm
+export default compose(
+	graphql(signupAndCreateEnquiry, {
+			name: 'signupAndCreateEnquiry'
+	}),
+)(EnquiryForm)

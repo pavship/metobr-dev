@@ -1,24 +1,45 @@
 import React, { Component } from 'react'
-import debounce from 'lodash/debounce';
-import { Input } from './styled-semantic.js'
+import debounce from 'lodash/debounce'
+import { Input } from 'semantic-ui-react'
+import { isNaN } from '../../utils/format';
 
+// INFO built-in handling of 'int' number type
+// TODO think about integrating other input types (currency, etc..)
 class SmartInput extends Component {
 	state = {
 		value: this.props.field.curVal || ''
 	}
-	debouncedSetField = debounce(
-		(name, { value }) => this.props.setField(name, { value })
-	, 250)
+	debouncedSetField = debounce(value => {
+    const { field: { name }, setField } = this.props
+    setField(name, { value })
+	}, 250)
+	writeVal = (value) => {
+		this.setState({ value })
+		this.debouncedSetField(value)
+	}
 	handleInputChange = ( e, { value } ) => {
-		// TODO validate and parse according to input type
-		const { type, field: { name }, setField } = this.props
-		let newVal = value
-		if (type === 'int' && value !== '') {
-			newVal = parseInt(value, 10)
-			if (!newVal) return
+		if (value === '') return this.writeVal('')
+		const { type } = this.props
+		// block/parse invalid integer input for 'int' input type
+		if (type === 'int') {
+			const intVal = parseInt(value, 10)
+			return intVal && this.writeVal(intVal)
 		}
-		this.setState({ value: newVal })
-		this.debouncedSetField(name, { value: newVal })
+		return this.writeVal(value)
+	}
+	// onChanged isn't fired on input with type["number"]
+	// when user mixes numbers with symbols -,. for ex -> '234234,,,,,,,234'
+	// so I check valueAsNumber html input attr onBlur and set error
+	onBlur = () => {
+		const { field: { name }, setField } = this.props
+		const { type, valueAsNumber } = this.input.inputRef
+		if (type === 'number' && isNaN(valueAsNumber)) {
+			// this.input.inputRef.value = ''
+			setField(name, { err: {
+				title: 'Ошибка в поле "Количество"',
+				message: 'Недопустимое значение'
+			} })
+		}
 	}
 	render() {
 		const { field: { curVal }, setField, type, ...rest } = this.props
@@ -29,6 +50,8 @@ class SmartInput extends Component {
 				type={type === 'int' ? 'number' : type}
 				value={value}
 				onChange={this.handleInputChange}
+				onBlur={this.onBlur}
+				ref={input => this.input = input}
 			/>
 		)
 	}

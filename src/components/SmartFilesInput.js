@@ -51,6 +51,7 @@ export default class SmartFilesInput extends Component {
 	}
 	upload = async (files) => {
 		const { field, setField } = this.props
+		const storeIds = files.map(f => f.storeId)
 		try {
 			await Promise.all(files.map(async f => {
 				const uploadLink = await axios({
@@ -76,16 +77,29 @@ export default class SmartFilesInput extends Component {
 					data
 				})
 				console.log('uploadResponse > ', uploadResponse)
+				if (uploadResponse.statusText !== 'Created') 
+					throw new Error('Повторите попытку, либо пришлите нам файлы по email. Cообщите пожалуйста о данной ошибке нашему менеджеру.')
 			}))
-			console.log('this.state > ', this.state)
 			this.setState({
 				files: produce(this.state.files, draftFiles => {
 					draftFiles.forEach(f => 
-						files.map(f => f.storeId).includes(f.storeId) && delete f.loading
+						storeIds.includes(f.storeId) && delete f.loading
 					)
 				})
 			})
+			setField(field.name, {
+				value: [
+					...field.curVal,
+					...files.map(({ file: { name }, storeId }) => ({
+						name,
+						storeId
+					}))
+				]
+			})
 		} catch (err) {
+			this.setState({
+				files: this.state.files.filter(sf => !storeIds.includes(sf.storeId))
+			})
 			setField(field.name, {
 				err: {
 					title: 'Ошибка при загрузке файлов',
@@ -102,7 +116,6 @@ export default class SmartFilesInput extends Component {
 
 	}
 	render() {
-		console.log('render > ')
 		const {
 			field: { diff },
 			setField,

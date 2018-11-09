@@ -7,7 +7,7 @@
     "axios": "^0.18.0",
     "cuid": "^2.1.4",
     "draft-js": "^0.10.5",
-    "draft-js-export-html": "^1.2.0",
+    "draftjs-to-html": "^0.8.4",
     "graphql": "^14.0.2",
     "immer": "^1.7.4",
     "jwt-decode": "^2.2.0",

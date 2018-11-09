@@ -21,7 +21,7 @@ export const allOrgs = gql`
 `
 
 export const createOrg = gql`
-    mutation createOrg($inn: String!) {
+    mutation CreateOrg($inn: String!) {
         createOrg(inn: $inn) {
             id
 			inn

@@ -41,23 +41,34 @@ class WrappedDraftEditor extends Component {
 		hasFocus: false
 	}
 	setHasFocus = (hasFocus) => this.setState({ hasFocus })
+	setHasDiff = (hasDiff) => this.setState({ hasDiff })
+	// setHtml = debounce((editorContent) => {
+	// 	const { field: { name }, setField } = this.props
+	// 	const html = stateToHTML(editorContent)
+	// 	setField( name, { value: html } )
+	// }, 250)
+	// setHtml = html => console.log('html > ', html)
 	render() {
 		const { hasFocus } = this.state
 		const {
 			borderless,
 			diff,
 			forwardedRef,
+			field,
+			setField,
 			...rest
 		} = this.props
 		return (
 			<EditorWrapper
 				borderless={borderless}
 				hasFocus={hasFocus}
-				diff={diff}
+				diff={field.diff}
 			>
 				<DraftEditor
 					ref={forwardedRef}
 					setHasFocus={this.setHasFocus}
+					initFromHtml={field.curVal}
+					setHtml={html => setField( field.name, { value: html } )}
 					{...rest}
 				/>
 			</EditorWrapper>

@@ -3,8 +3,10 @@ import SectionHeaderCenteredContainer from './common/SectionHeaderCenteredContai
 
 const PersonSectionHeader = () => {
   return (
-    <SectionHeaderCenteredContainer >
-      2. Контактные данные
+    <SectionHeaderCenteredContainer
+      num='2'
+    >
+      Контактные данные
     </SectionHeaderCenteredContainer>
   )
 }

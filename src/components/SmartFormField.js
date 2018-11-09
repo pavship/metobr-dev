@@ -1,7 +1,17 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Form } from 'semantic-ui-react'
 import { Label } from './shared/styled-semantic.js'
 import SmartInput from './shared/SmartInput'
+
+const SSmartInput = styled(SmartInput)`
+  width: 270px !important;
+  ${props => props.field.err && `
+    >div {
+      border-width: 1px 1px 1px 0 !important;
+    }
+  `}
+`
 
 const SmartFormField = ({
   label,
@@ -24,12 +34,11 @@ const SmartFormField = ({
       >
         {label}
       </Label>
-      <SmartInput
+      <SSmartInput
         {...rest}
         // onKeyDown={(e, t) => console.log('action > ',e.keyCode === 13)}
         field={field}
         setField={setField}
-        w='270px !important'
         label={inputLabel}
         labelPosition={inputLabelPosition}
       />

@@ -7,10 +7,12 @@ import {
 	convertFromHTML,
 	getDefaultKeyBinding,
 	KeyBindingUtil,
-	Modifier
+	Modifier,
+	convertToRaw
 } from 'draft-js'
 import 'draft-js/dist/Draft.css'
-import stateToHTML from 'draft-js-export-html'
+import debounce from 'lodash/debounce'
+import draftToHtml from 'draftjs-to-html'
 
 class DraftEditor extends React.Component {
 	constructor(props){
@@ -35,10 +37,11 @@ class DraftEditor extends React.Component {
 	onChange = (editorState) => {
 		this.setState({ editorState })
 		const newContent = editorState.getCurrentContent()
-		const { setEditorHasText, setEditorDiff, setHasFocus } = this.props
+		const { setEditorHasText, setHasDiff, setHasFocus, setHtml } = this.props
 		if (editorState && setEditorHasText) setEditorHasText(newContent.hasText())
-		if (setEditorDiff) setEditorDiff(newContent !== this.state.oriContent)
+		if (setHasDiff) setHasDiff(newContent !== this.state.oriContent)
 		if (setHasFocus) setHasFocus(editorState.getSelection().getHasFocus())
+		if (setHtml) this.debouncedSetHtml(editorState)
 	}
 	kolmechKeyBindingFn = (e) => {
 		// catch Ctrl + Enter event
@@ -71,11 +74,14 @@ class DraftEditor extends React.Component {
 	clear = () => this.setState({ 
 		editorState: EditorState.push(this.state.editorState, ContentState.createFromText(''), 'remove-range')
 	})
-	exportHtml = () => {
-		const html = stateToHTML(this.state.editorState.getCurrentContent())
+	exportHtml = (editorState = this.state.editorState) => {
+		const html = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 		if (!convertFromHTML(html).contentBlocks) return null
 		return html
 	}
+	debouncedSetHtml = debounce(editorState => {
+		this.props.setHtml(this.exportHtml(editorState))
+	}, 250)
 	render() {
 		const {
 			readOnly,
