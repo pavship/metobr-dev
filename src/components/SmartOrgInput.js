@@ -5,7 +5,7 @@ import { graphql, compose } from 'react-apollo'
 import { createOrg } from '../graphql/org'
 
 import { Input, Message, Icon, Form } from 'semantic-ui-react'
-import { Div, Span, A, Label } from './shared/styled-semantic.js'
+import { Span, Label } from './shared/styled-semantic.js'
 
 class SmartOrgInput extends Component {
 	componentIsMounted = true
@@ -43,7 +43,7 @@ class SmartOrgInput extends Component {
 		}
 	}
 	render() {
-		const { field: { curVal }, setField, createOrg, ...rest } = this.props
+		const { field, setField, createOrg, ...rest } = this.props
 		const { inn, loading, err, orgName } = this.state
 		if (!orgName) return <>
 			<Form

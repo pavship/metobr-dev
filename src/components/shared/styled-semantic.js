@@ -242,10 +242,26 @@ export const Label = styled.label`
 	margin-right: 0 !important;
 `
 
-const InputPropFilter = ({ w, ...rest }) => (
-	<SInput {...rest} />
-)
-export const Input = styled(InputPropFilter)`
+// const InputPropFilter = ({ w, ...rest }) => (
+// 	<SInput {...rest} />
+// )
+// const InputPropFilter = React.forwardRef(({ w, ...rest }, ref) =>
+// 	<SInput
+// 		ref={ref}
+// 		{...rest}
+// 	/>
+// )
+// const InputPropFilter = ({w, ...rest}) => (
+// 	<SInput
+// 		{...rest}
+// 	/>
+// )
+// export const Input = styled(InputPropFilter)`
+// 	&&&& {
+// 		${props => baseSet(props)}
+// 	}
+// `
+export const Input = styled(SInput)`
 	&&&& {
 		${props => baseSet(props)}
 	}

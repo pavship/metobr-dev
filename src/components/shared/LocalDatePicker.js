@@ -5,7 +5,7 @@ import 'react-day-picker/lib/style.css'
 
 import styled from 'styled-components'
 
-import { isValidDate, toLocalISOString, fromLocalISOString }from '../../utils/dates'
+import { toLocalISOString, fromLocalISOString }from '../../utils/dates'
 
 const PickerDiv = styled.div`
 	display: inline-block;

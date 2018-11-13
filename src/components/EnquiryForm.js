@@ -16,6 +16,8 @@ import SmartFileField from './SmartFileField.js'
 
 import { graphql, compose } from 'react-apollo'
 import { signupAndCreateEnquiry } from '../graphql/enquiry'
+import SmartCheckField from './SmartCheckField.js';
+import SmartCurrencyField from './SmartCurrencyField.js';
 
 // const enquiry = {
 //   orgId: '',
@@ -27,18 +29,20 @@ import { signupAndCreateEnquiry } from '../graphql/enquiry'
 //   tel: '',
 //   country: 'rus',
 //   modelName: '',
+//   files: [],
+//   hasWorkpeace: true,
 //   qty: '',
 //   period: 'none',
 //   deadlineDateLocal: '',
+//   maxPrice: '',
 //   htmlText: '',
-//   files: [],
 //   hasAgreedToRules: true,
 //   hasAgreedToSearch3rdParty: false,
 // }
 const enquiry = {
   country: "rus",
   deadlineDateLocal: "2018-11-15",
-  email: "sdf@",
+  email: "sdf@v",
   files: [
     {name: "274832076.jpg", storeId: "cjo9it2ci00003a5rkxp8fr54"},
     {name: "474533138.jpg", storeId: "cjo9ithej00013a5r8hxzn1qo"},
@@ -46,13 +50,15 @@ const enquiry = {
   ],
   hasAgreedToRules: true,
   hasAgreedToSearch3rdParty: false,
+  hasWorkpeace: true,
   htmlText: "<p>sdsdf</p>↵<p>sdfsfd</p>↵",
   modelName: "sdf",
   orgId: "cjo1wyt4c000t0850ndo82net",
   period: "none",
+  maxPrice: '',
   qty: 21,
-  regName: "sdf",
-  tel: "( 123 ) ",
+  regName: " Bim  k John Van Vald",
+  tel: "234342",
 }
 
 const countryOtions = [
@@ -129,11 +135,13 @@ class EnquiryForm extends Component {
             tel,
             country,
             modelName,
+            files,
+            hasWorkpeace,
             qty,
             period,
             deadlineDateLocal,
+            maxPrice,
             htmlText,
-            files,
             hasAgreedToRules,
             hasAgreedToSearch3rdParty,
           }
@@ -212,6 +220,15 @@ class EnquiryForm extends Component {
                 field={modelName}
                 setField={setField}
               />
+              <SmartFileField
+                field={files}
+                setField={setField}
+              />
+              <SmartCheckField
+                label='Давальческая заготовка'
+                field={hasWorkpeace}
+                setField={setField}
+              />
               <SmartFormField
                 required
                 type='int'
@@ -237,16 +254,18 @@ class EnquiryForm extends Component {
 									setField={setField}
 								/>
 							</Form.Field>
+              <SmartCurrencyField
+                label='Проходная цена'
+                field={maxPrice}
+                setField={setField}
+              />
               <SmartNoteField
                 label='Доп. информация'
-                placeholder='Опишите задачу и заготовку'
+                placeholder='Любые подробности'
                 field={htmlText}
                 setField={setField}
               />
-              <SmartFileField
-                field={files}
-                setField={setField}
-              />
+              
             </Form>
           </EnquiryTaskSection>
           <CenteredContainer

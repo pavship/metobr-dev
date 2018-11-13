@@ -5,7 +5,14 @@ import { Label } from './shared/styled-semantic.js'
 import SmartInput from './shared/SmartInput'
 
 const SSmartInput = styled(SmartInput)`
-  width: 270px !important;
+  &&&&&&& {
+    display: inline-flex;
+    width: 270px;
+    >input {
+      flex-shrink: 1;
+      width: 100%;
+    }
+  }
   ${props => props.field.err && `
     >div {
       border-width: 1px 1px 1px 0 !important;

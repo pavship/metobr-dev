@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Dropdown } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 import { Label, Input } from './shared/styled-semantic.js'
 import SmartInput from './shared/SmartInput'
 import InputMask from 'react-input-mask'

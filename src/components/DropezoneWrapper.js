@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import styled from 'styled-components'
 import { Input, Icon, Button } from 'semantic-ui-react'
@@ -66,62 +66,55 @@ const CloseButton = styled(Button)`
 	}
 `
 
-export default class DropezoneWrapper extends Component {
-	state = {
-		textInput: ''
-	}
-	render() {
-		const {
-			files,
-			onDrop,
-			cancelUpload
-		} = this.props
-		const { textInput } = this.state
-		return (
-			<div
-				style={{
-					display: 'inline-block',
-					width: '270px'
-				}}
-			>
-				{files.map(({ file: { name }, loading }) =>
-					<FileItem
-						key={name}
-						value={name}
-						onFocus={e => e.target.blur()}
-						action
-						icon
-						loading={loading}
-					>
-						<input />
-						<SuccessIcon
-							name='check'
-							color='green'
-							onClick={(name) => cancelUpload(name)}
+export default ({
+	files,
+	onDrop,
+	cancelUpload
+}) => {
+	return (
+		<div
+			style={{
+				display: 'inline-block',
+				width: '270px'
+			}}
+		>
+			{files.map(({ file: { name }, loading }) =>
+				<FileItem
+					key={name}
+					value={name}
+					onFocus={e => e.target.blur()}
+					action
+					icon
+					loading={loading}
+				>
+					<input />
+					<SuccessIcon
+						name='check'
+						color='green'
+						onClick={(name) => cancelUpload(name)}
+					/>
+					<CloseButton
+						basic
+						color='red'
+						icon='close'
+						onClick={(name) => cancelUpload(name)}
+					/>
+				</FileItem>
+			)}
+			<DropzoneWrapper>
+				<Dropzone
+					className='ignore'
+					activeClassName='activeDropzone'
+					onDrop={onDrop}
+				>
+						<Input
+							action={{ icon: 'download' }} 
+							placeholder='Перетащите сюда файлы'
+							value=''
+							onFocus={e => e.target.blur()}
 						/>
-    				<CloseButton
-							basic
-							color='red'
-							icon='close'
-							onClick={(name) => cancelUpload(name)}
-						/>
-					</FileItem>
-				)}
-				<DropzoneWrapper>
-					<Dropzone
-						className='ignore'
-						activeClassName='activeDropzone'
-						onDrop={onDrop}
-					>
-							<Input
-								action={{ icon: 'download' }} 
-								placeholder='Перетащите сюда файлы'
-								value=''
-								onFocus={e => e.target.blur()}
-							/>
-					</Dropzone>
-				</DropzoneWrapper>
-			</div>
-		)
-	}
+				</Dropzone>
+			</DropzoneWrapper>
+		</div>
+	)
 }

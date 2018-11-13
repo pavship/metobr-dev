@@ -117,7 +117,7 @@ export default class SmartFilesInput extends Component {
 	}
 	render() {
 		const {
-			field: { diff },
+			field,
 			setField,
 			...rest
 		} = this.props

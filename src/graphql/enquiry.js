@@ -12,10 +12,9 @@ export const signupAndCreateEnquiry = gql`
 		$period: String!
 		$deadlineDateLocal: String
 		$htmlText: String
-		$orgId: ID!
-		$files: [File]!
-		$hasAgreedToRules: Bool!
-		$hasAgreedToSearch3rdParty: Bool
+		$files: [File1CreateInput!]!
+		$hasAgreedToRules: Boolean!
+		$hasAgreedToSearch3rdParty: Boolean
 	) {
 		signupAndCreateEnquiry(
 			orgId: $orgId
@@ -28,7 +27,6 @@ export const signupAndCreateEnquiry = gql`
 			period: $period
 			deadlineDateLocal: $deadlineDateLocal
 			htmlText:	$htmlText
-			orgId: $orgId
 			files: $files
 			hasAgreedToRules: $hasAgreedToRules
 			hasAgreedToSearch3rdParty: $hasAgreedToSearch3rdParty

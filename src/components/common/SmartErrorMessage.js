@@ -20,9 +20,9 @@ export default ({
     >
       <Message.Header>{header}</Message.Header>
       {content &&
-        <pre>
+        <p>
           {content}
-        </pre>
+        </p>
       }
       {items && 
         <Message.List>

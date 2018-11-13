@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import debounce from 'lodash/debounce'
-import { Input } from 'semantic-ui-react'
+import { Input } from './styled-semantic.js'
 import { isNaN } from '../../utils/format';
 
 // INFO built-in handling of 'int' number type
@@ -42,7 +42,7 @@ class SmartInput extends Component {
 		}
 	}
 	render() {
-		const { field: { curVal }, setField, type, ...rest } = this.props
+		const { field, setField, type, ...rest } = this.props
 		const { value } = this.state
 		return (
 			<Input
