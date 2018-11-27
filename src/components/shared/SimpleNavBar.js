@@ -2,7 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 import { Icon } from 'semantic-ui-react'
-import CenteredContainer from '../common/CenteredContainer'
+import CenteredContainer from './CenteredContainer'
 
 const Menu = styled.div`
 	display: flex;

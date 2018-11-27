@@ -1,5 +1,5 @@
 import React from 'react'
-import CenteredContainer from './common/CenteredContainer';
+import CenteredContainer from './shared/CenteredContainer';
 
 const EnquiryPageTitle = () => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 import PersonSectionHeader from './PersonSectionHeader';
-import CenteredContainer from './common/CenteredContainer';
+import CenteredContainer from './shared/CenteredContainer';
 
 const EnquiryPersonSection = ({ children }) => {
   return <>

@@ -4,9 +4,9 @@ import { Query } from 'react-apollo'
 import { me } from '../graphql/user'
 
 import GlobalContext from './data/GlobalContext'
-import SimpleNavBar from './shared/SimpleNavBar';
+import SimpleNavBar from './shared/SimpleNavBar'
 import LoginPage from './shared/LoginPage'
-import EnquiryPage from './EnquiryPage';
+import EnquiryPage from './EnquiryPage'
 
 const makeMenuName = (person) => {
   const { fName, lName } = person

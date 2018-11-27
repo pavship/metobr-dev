@@ -12,7 +12,7 @@ export const signupAndCreateEnquiry = gql`
 		$period: String!
 		$deadlineDateLocal: String
 		$htmlText: String
-		$files: [File1CreateInput!]!
+		$files: [FileLinkCreateInput!]!
 		$hasAgreedToRules: Boolean!
 		$hasAgreedToSearch3rdParty: Boolean
 	) {

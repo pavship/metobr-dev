@@ -1,6 +1,6 @@
 import React from 'react'
 // import styled from 'styled-components'
-import { Div } from '../shared/styled-semantic.js'
+import { Div } from './styled-semantic.js'
 
 const CenteredContainer = ({p, ...props}) => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 import OrgSectionHeader from './OrgSectionHeader';
-import CenteredContainer from './common/CenteredContainer';
+import CenteredContainer from './shared/CenteredContainer';
 
 const EnquiryOrgSection = ({ children }) => {
   return <>

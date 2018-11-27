@@ -1,6 +1,6 @@
 import React from 'react'
 import { Span } from '../shared/styled-semantic.js'
-import CenteredContainer from './CenteredContainer'
+import CenteredContainer from '../shared/CenteredContainer'
 
 const SectionHeaderCenteredContainer = ({ children, num }) => {
   return (

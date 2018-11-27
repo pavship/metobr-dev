@@ -1,6 +1,6 @@
 import React from 'react'
 import TaskSectionHeader from './TaskSectionHeader';
-import CenteredContainer from './common/CenteredContainer';
+import CenteredContainer from './shared/CenteredContainer';
 
 export default ({ children }) => {
   return <>
