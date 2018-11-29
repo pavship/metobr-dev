@@ -63,7 +63,7 @@ const enquiry = {
 
 const countryOtions = [
   { key: 'rus', text: '+7', value: 'rus' },
-  { key: 'other', text: 'other', value: 'other' },
+  { key: 'notRus', text: 'other', value: 'notRus' },
 ]
 
 const periodOtions = [
