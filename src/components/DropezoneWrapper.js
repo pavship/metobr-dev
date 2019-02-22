@@ -107,12 +107,12 @@ export default ({
 					activeClassName='activeDropzone'
 					onDrop={onDrop}
 				>
-						<Input
-							action={{ icon: 'download' }} 
-							placeholder='Перетащите сюда файлы'
-							value=''
-							onFocus={e => e.target.blur()}
-						/>
+					<Input
+						action={{ icon: 'download' }} 
+						placeholder='Перетащите сюда файлы'
+						value=''
+						onFocus={e => e.target.blur()}
+					/>
 				</Dropzone>
 			</DropzoneWrapper>
 		</div>
